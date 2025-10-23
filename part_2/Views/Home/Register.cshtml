@@ -1,0 +1,49 @@
+﻿<!--Registration page-->
+<head>
+
+	<style>
+		body{
+			background-color: 333333
+		}
+		body,
+		html {
+			height: 100%;
+			margin: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.form-container {
+			padding: 30px;
+			border: 2px solid #ccc;
+			background-color: #333333;
+		}
+	</style>
+</head>
+<!--Login page form action-->
+<body>
+	<div class="form-container">
+		<form asp-action="Create" asp-controller="RegisterViews" method="post">
+			<input type="name" name="FullName" placeholder="Enter Your Name" />
+
+			<br />
+			<input type="email" name="Email" placeholder="Enter Your Email" />
+			<br />
+			<input type="password" name="Password" placeholder="Enter Your password" />
+			<br />
+			<select>
+				<option>Select Role</option>
+				<option>Lecturer</option>
+				<option>Program Coordinator</option>
+				<option>Academic Manager</option>
+			</select>
+			<br />
+			<input type="submit" value="Register" />
+		</form>
+		<p>
+			Already have an account?
+			<a href=@Url.Action("Index", "Home")>Login now</a>
+		</p>
+	</div>
+</body>

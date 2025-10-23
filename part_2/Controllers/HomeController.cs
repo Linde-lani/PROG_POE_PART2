@@ -1,0 +1,138 @@
+using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
+using part_2.Data;
+using part_2.Models;
+
+namespace part_2.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+
+
+
+        public HomeController(ILogger<HomeController> logger,AppDbContext context, IWebHostEnvironment hostingEnvironment)
+        {
+            _logger = logger;
+            _context = context;
+            _hostingEnvironment = hostingEnvironment;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        public IActionResult LecturerDashboard()
+        {
+            return View();
+        }
+
+        public IActionResult CoordinatorDashboard()
+        {
+            return View();
+        }
+
+        public IActionResult ManagerDashboard()
+        {
+            return View();
+        }
+
+       
+        [HttpPost]
+        public async Task<IActionResult> LoginDashboard(string Email, string Password)
+        {
+            // Find user by email
+            var user = await _context.RegisterViews.FirstOrDefaultAsync(u => u.Email == Email);
+            if (user == null)
+            {
+                // Invalid email
+                ModelState.AddModelError("", "Invalid email or password");
+                return View("Index"); // Show login again with error
+            }
+
+            // Verify password
+            //var passwordHasher = new PasswordHasher<RegisterViews>();
+            //var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, Password);
+            //if (result == PasswordVerificationResult.Failed)
+            //{
+            //    // Invalid password
+            //    ModelState.AddModelError("", "Invalid email or password");
+            //    return View("Index");
+            //}
+
+            // Successful login, redirect based on role
+            switch (user.Role)
+            {
+                case "Lecturer":
+                    _logger.LogInformation("Redirecting to LecturerDashboard");
+                    return RedirectToAction("Create", "Claims");
+                case "Program Coordinator":
+                    _logger.LogInformation("Redirecting to CoordinatorDashboard");
+                    return RedirectToAction("CoordinatorDashboard", "Claims");
+                case "Academic Manager":
+                    _logger.LogInformation("Redirecting to ManagerDashboard");
+                    return RedirectToAction("ManagerDashboard", "Claims");
+                default:
+                    _logger.LogInformation("Redirecting to Index");
+                    return RedirectToAction("Index"); 
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadSupportingDocument(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return Json(new { success = false, message = "No file selected." });
+
+            // Validate size
+            if (file.Length > 5 * 1024 * 1024)
+                return Json(new { success = false, message = "File exceeds size limit." });
+
+            // Validate type
+            var permittedTypes = new[] {
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    };
+            if (!permittedTypes.Contains(file.ContentType))
+                return Json(new { success = false, message = "Invalid file type." });
+
+            // Save file securely
+            var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+            Directory.CreateDirectory(uploadsFolder);
+            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Return the filename to store in the claim
+            return Json(new { success = true, fileName = uniqueFileName });
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}

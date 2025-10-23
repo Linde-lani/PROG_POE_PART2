@@ -1,0 +1,123 @@
+﻿@model part_2.Models.Claim
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Submit Claim</h1>
+
+<h4>Claim</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FacultyName" class="control-label"></label>
+                <input asp-for="FacultyName" class="form-control" />
+                <span asp-validation-for="FacultyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModuleName" class="control-label"></label>
+                <input asp-for="ModuleName" class="form-control" />
+                <span asp-validation-for="ModuleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sessions" class="control-label"></label>
+                <input asp-for="Sessions" class="form-control" />
+                <span asp-validation-for="Sessions" class="text-danger">
+                </span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalAmount" class="control-label"></label>
+                <input asp-for="TotalAmount" class="form-control" />
+                <span asp-validation-for="TotalAmount" class="text-danger">
+                </span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupportingDocuments" class="control-label">Supporting Documents</label>
+                <input asp-for="SupportingDocuments" type="file" id="SupportingDocumentsFile" class="form-control" />
+                <button type="button" class="btn btn-secondary" onclick="uploadSupportingDocument()">Upload</button>
+                <p id="uploadedFileName"></p>
+                <span asp-validation-for="SupportingDocuments" class="text-danger"></span>
+            </div> 
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <p>
+        
+        <a href="@Url.Action("Index", "Claims")">Track Claim</a>
+    </p>
+</div>
+@* <script>
+
+<script/> *@
+
+<script>
+
+    document.getElementById('Sessions').addEventListener('input',function () {
+        const Sessions = 300;
+        const count = parseInt(this.value) || 0;
+        document.getElementById('TotalAmount').value = count * Sessions;
+    });
+
+    function uploadSupportingDocument() {
+        var fileInput = document.getElementById('SupportingDocumentsFile');
+        var file = fileInput.files[0];
+
+        if (!file) {
+            alert("Please select a file to upload.");
+            return;
+        }
+
+        // Validate size (e.g., 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert("File exceeds 5MB size limit.");
+            return;
+        }
+
+        // Check file type
+        var allowedTypes = [
+            'application/pdf',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            alert("Invalid file type. Allowed: PDF, DOCX, XLSX.");
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append('file', file);
+
+        fetch('/Home/UploadSupportingDocument', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('uploadedFileName').innerText = "Uploaded: " + data.fileName;
+                // Set the filename in the hidden input for form submission
+                document.querySelector('input[name="SupportingDocuments"]').value = data.fileName;
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

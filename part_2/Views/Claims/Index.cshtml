@@ -1,0 +1,47 @@
+﻿@model IEnumerable<part_2.Models.Claim>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h2>Track Claims</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Faculty Name</th>
+            <th>Module Name</th>
+            <th>Sessions</th>
+            <th>Total Amount</th>
+            <th>Supporting Document</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.FacultyName</td>
+                <td>@claim.ModuleName</td>
+                <td>@claim.Sessions</td>
+                <td>@claim.TotalAmount</td>
+                <td>@claim.Status</td>
+                
+                <td>
+                    @if (claim.Status == "Pending")
+                    {
+                    <td>
+                        
+                    </td>
+                }
+                else
+                {
+                    <p>This claim has been @claim.Status.ToLower().</p>
+                }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="@Url.Action("Create", "Claims")">Make A Claim</a>
