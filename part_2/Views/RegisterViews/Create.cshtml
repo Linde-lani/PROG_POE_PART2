@@ -158,15 +158,17 @@
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-primary" />
         </div>
+		<div>
+			<p>
+				Already have an account?
+				<a href="@Url.Action("Index", "Home")" class="login-link"> Login Now</a>
+			</p>
+		</div>
+
     </form>
 </div>
 
-<div>
-    <p>
-        Already have an account?
-        <a href="@Url.Action("Index", "Home")" class="login-link"> Login Now</a>
-    </p>
-</div>
+
 
 @section Scripts {
     @{
