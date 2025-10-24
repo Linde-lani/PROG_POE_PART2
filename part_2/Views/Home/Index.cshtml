@@ -2,29 +2,118 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Login</h1>
+<h1 class="login-title">Login</h1>
 
-<hr />
+<style>
+    /* Container styling */
+    .login-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="LoginDashboard" asp-controller="Home" method="post">
-            <div class="form-group">
-                <label for="Email" class="control-label">Email</label>
-                <input type="email" name="Email" class="form-control" placeholder="Enter email" />
-            </div>
-            <div class="form-group">
-                <label for="Password" class="control-label">Password</label>
-                <input type="password" name="Password" class="form-control" placeholder="Enter password" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
-        </form>
-        <!--Link to open registration page-->
-        <p>
-            Don't have an account?
-            <a href="@Url.Action("Create", "RegisterViews")">Register now</a>
-        </p>
-    </div>
+    /* Title styling */
+    .login-title {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    /* Form styling */
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Form group styling */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    /* Labels styling */
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #555;
+    }
+
+    /* Input styling */
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1em;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+        /* Focus state */
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+    /* Submit button styling */
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 12px;
+        font-size: 1.1em;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+    /* Additional link styling */
+    p {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 1em;
+    }
+
+        p a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            p a:hover {
+                text-decoration: underline;
+            }
+</style>
+
+<div class="login-container">
+    <h1 class="login-title">Login</h1>
+
+    <form asp-action="LoginDashboard" asp-controller="Home" method="post">
+        <div class="form-group">
+            <label for="Email" class="control-label">Email</label>
+            <input type="email" name="Email" class="form-control" placeholder="Enter email" />
+        </div>
+        <div class="form-group">
+            <label for="Password" class="control-label">Password</label>
+            <input type="password" name="Password" class="form-control" placeholder="Enter password" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-primary" />
+        </div>
+    </form>
+    <!-- Link to open registration page -->
+    <p>
+        Don't have an account?
+        <a href="@Url.Action("Create", "RegisterViews")">Register now</a>
+    </p>
 </div>
