@@ -1,32 +1,87 @@
 ﻿@model IEnumerable<part_2.Models.Claim>
 
-<h2>Claim Details</h2>
-@foreach (var claim in Model)
-{
-<table>
-    <tr>
-        <th>Faculty Name</th>
-        <td>@claim.FacultyName</td>
-    </tr>
-    <tr>
-        <th>Module Name</th>
-        <td>@claim.ModuleName</td>
-    </tr>
-    <tr>
-        <th>Sessions</th>
-        <td>@claim.Sessions</td>
-    </tr>
-    <tr>
-        <th>Total Amount</th>
-        <td>@claim.TotalAmount</td>
-    </tr>
-    <tr>
-        <th>Supporting Documents</th>
-        <td>@claim.SupportingDocuments</td>
-    </tr>
-    <tr>
-        <th>Status</th>
-        <td>@claim.Status</td>
-    </tr>
-</table>
-}
+<h2 class="claim-details-title">Claim Details</h2>
+
+<style>
+    /* Container styling */
+    .claim-details-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    /* Title styling */
+    .claim-details-title {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-size: 1em;
+    }
+
+    /* Table header styling */
+    th {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        text-align: left;
+        width: 30%;
+    }
+
+    /* Table data styling */
+    td {
+        padding: 10px;
+        border: 1px solid #dee2e6;
+        width: 70%;
+    }
+
+    /* Optional: style for each claim block if multiple claims are shown */
+    /* Add spacing between multiple tables if needed */
+    table + table {
+        margin-top: 30px;
+    }
+</style>
+
+<div class="claim-details-container">
+    @foreach (var claim in Model)
+    {
+        <table>
+            <tr>
+                <th>Faculty Name</th>
+                <td>@claim.FacultyName</td>
+            </tr>
+            <tr>
+                <th>Module Name</th>
+                <td>@claim.ModuleName</td>
+            </tr>
+            <tr>
+                <th>Sessions</th>
+                <td>@claim.Sessions</td>
+            </tr>
+            <tr>
+                <th>Total Amount</th>
+                <td>@claim.TotalAmount</td>
+            </tr>
+            <tr>
+                <th>Supporting Documents</th>
+                <td>@claim.SupportingDocuments</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>@claim.Status</td>
+            </tr>
+        </table>
+    }
+</div>
