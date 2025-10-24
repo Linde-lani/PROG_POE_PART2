@@ -1,42 +1,108 @@
 ﻿@model List<Claim>
 
-<h2>Pending Claims</h2>
+<h2 class="claims-title">Pending Claims</h2>
 
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>Faculty Name</th>
-            <th>Module Name</th>
-            <th>Sessions</th>
-            <th>Total Amount</th>
-            <th>Supporting Document</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var claim in Model)
-        {
-            <tr>
-                <td>@claim.FacultyName</td>
-                <td>@claim.ModuleName</td>
-                <td>@claim.Sessions</td>
-                <td>@claim.TotalAmount</td>
-                <td>
-                    @if (!string.IsNullOrEmpty(claim.SupportingDocuments))
-                    {
-                        <a href="@Url.Content("~/uploads/" + claim.SupportingDocuments)" target="_blank">View</a>
-                    }
-                </td>
-                <td>
-                    <form method="post" asp-action="ApproveCoordinatorClaim" asp-route-id="@claim.Id" style="display:inline;">
-                        <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                    </form>
-                    <form method="post" asp-action="RejectCoordinatorClaim" asp-route-id="@claim.Id" style="display:inline; margin-left:5px;">
-                        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-                    </form>
-                </td>
-            </tr>
+<style>
+    /* Container styling */
+    .claims-container {
+        max-width: 1000px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    /* Title styling */
+    .claims-title {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    /* Table styling */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table thead {
+            background-color: #007bff;
+            color: #fff;
         }
-    </tbody>
-</table>
-<a href="@Url.Action("Index", "Home")">Login</a>
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        /* Row hover effect */
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    /* Action buttons styling */
+    .btn-sm {
+        padding: 5px 10px;
+        font-size: 0.9em;
+    }
+
+    /* Link styling */
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+</style>
+
+<div class="claims-container">
+    <h2 class="claims-title">Pending Claims</h2>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Faculty Name</th>
+                <th>Module Name</th>
+                <th>Sessions</th>
+                <th>Total Amount</th>
+                <th>Supporting Document</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.FacultyName</td>
+                    <td>@claim.ModuleName</td>
+                    <td>@claim.Sessions</td>
+                    <td>@claim.TotalAmount</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(claim.SupportingDocuments))
+                        {
+                            <a href="@Url.Content("~/uploads/" + claim.SupportingDocuments)" target="_blank">View</a>
+                        }
+                    </td>
+                    <td>
+                        <form method="post" asp-action="ApproveCoordinatorClaim" asp-route-id="@claim.Id" style="display:inline;">
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                        <form method="post" asp-action="RejectCoordinatorClaim" asp-route-id="@claim.Id" style="display:inline; margin-left:5px;">
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="@Url.Action("Index", "Home")">Login</a>
+</div>
