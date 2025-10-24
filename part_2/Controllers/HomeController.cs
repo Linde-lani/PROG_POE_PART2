@@ -38,22 +38,6 @@ namespace part_2.Controllers
         {
             return View();
         }
-
-        public IActionResult LecturerDashboard()
-        {
-            return View();
-        }
-
-        public IActionResult CoordinatorDashboard()
-        {
-            return View();
-        }
-
-        public IActionResult ManagerDashboard()
-        {
-            return View();
-        }
-
        
         [HttpPost]
         public async Task<IActionResult> LoginDashboard(string Email, string Password)
@@ -98,6 +82,8 @@ namespace part_2.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadSupportingDocument(IFormFile file)
         {
+
+
             if (file == null || file.Length == 0)
                 return Json(new { success = false, message = "No file selected." });
 
@@ -117,8 +103,25 @@ namespace part_2.Controllers
             // Save file securely
             var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
             Directory.CreateDirectory(uploadsFolder);
-            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            var originalFileName = Path.GetFileName(file.FileName);
+
+            // Optional: To prevent overwriting, you could add a unique suffix if a file with the same name exists
+            var filePath = Path.Combine(uploadsFolder, originalFileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                // Append a timestamp or GUID to make filename unique
+                var fileNameWithoutExt = Path.GetFileNameWithoutExtension(originalFileName);
+                var extension = Path.GetExtension(originalFileName);
+                var timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                var uniqueFileName = $"{fileNameWithoutExt}_{timestamp}{extension}";
+                filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            }
+            else
+            {
+                // Save with original filename
+                var uniqueFileName = originalFileName;
+            }
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -126,7 +129,7 @@ namespace part_2.Controllers
             }
 
             // Return the filename to store in the claim
-            return Json(new { success = true, fileName = uniqueFileName });
+            return Json(new { success = true, fileName = Path.GetFileName(filePath) });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

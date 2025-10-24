@@ -107,6 +107,22 @@
             p a:hover {
                 text-decoration: underline;
             }
+
+    .login-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff; /* blue background */
+        color: #fff; /* white text */
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: background-color 0.3s, text-decoration 0.3s;
+    }
+
+        .login-link:hover {
+            background-color: #0069d9; /* darker blue on hover */
+            text-decoration: underline;
+        }
 </style>
 
 <div class="register-container">
@@ -148,7 +164,7 @@
 <div>
     <p>
         Already have an account?
-        <a href=@Url.Action("Index", "Home")>Login now</a>
+        <a href="@Url.Action("Index", "Home")" class="login-link"> Login Now</a>
     </p>
 </div>
 

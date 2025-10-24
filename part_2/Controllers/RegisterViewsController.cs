@@ -181,5 +181,7 @@ namespace part_2.Controllers
         {
             return _context.RegisterViews.Any(e => e.Id == id);
         }
+
+
     }
 }
