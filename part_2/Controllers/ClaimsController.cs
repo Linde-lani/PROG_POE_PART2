@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using part_2.Data;
 using part_2.Models;
+using part_2.Services;
 
 namespace part_2.Controllers
 {
@@ -211,7 +212,29 @@ namespace part_2.Controllers
             var claims = _context.Claims.ToList(); // or your data retrieval logic
             return View(claims);
         }
+        public async Task<IActionResult> VerifyAndApproveClaims()
+        {
+            var claims = await _context.Claims.Where(c => c.Status == "Pending").ToListAsync();
 
+            foreach (var claim in claims)
+            {
+                bool isValid = ClaimValidationService.IsClaimValid(claim);
+                if (isValid)
+                {
+                    // Automatically approve
+                    claim.Status = "Approved";
+                }
+                else
+                {
+                    // Optionally, reject or flag for manual review
+                    claim.Status = "Rejected"; // Or keep pending for manual review
+                }
+            }
+            await _context.SaveChangesAsync();
+
+            // Redirect to a page showing results or updated list
+            return RedirectToAction("CoordinatorDashboard"); // or your specific view
+        }
 
 
         [HttpPost]
