@@ -90,7 +90,8 @@
             <tr>
                 <th>Faculty Name</th>
                 <th>Module Name</th>
-                <th>Sessions</th>
+                <th>Hours</th>
+                <th>Rate</th>
                 <th>Total Amount</th>
                 <th>Supporting Document</th>
                 <th>Actions</th>
@@ -102,7 +103,8 @@
                 <tr>
                     <td>@claim.FacultyName</td>
                     <td>@claim.ModuleName</td>
-                    <td>@claim.Sessions</td>
+                    <td>@claim.Hours</td>
+                    <td>@claim.Rate</td>
                     <td>@claim.TotalAmount</td>
                     <td>
                         @if (!string.IsNullOrEmpty(claim.SupportingDocuments))

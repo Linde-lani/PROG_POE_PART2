@@ -168,15 +168,21 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="Sessions" class="control-label"></label>
-            <input asp-for="Sessions" class="form-control" />
-            <span asp-validation-for="Sessions" class="text-danger"></span>
+            <label asp-for="Hours" class="control-label"></label>
+            <input asp-for="Hours" id="Hours" input type="number" class="form-control" />
+            <span asp-validation-for="Hours" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Rate" class="control-label"></label>
+            <input asp-for="Rate" id="Rate" input type="number" class="form-control" />
+            <span asp-validation-for="Rate" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="TotalAmount" class="control-label"></label>
             <input asp-for="TotalAmount" class="form-control" />
-            <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            <span asp-validation-for="TotalAmount" id="TotalAmount" class="text-danger"></span>
         </div>
 
         <div class="form-group">
@@ -202,11 +208,31 @@
 
 
 <script>
-    document.getElementById('Sessions').addEventListener('input', function () {
-        const Sessions = 300;
-        const count = parseInt(this.value) || 0;
-        document.getElementById('TotalAmount').value = count * Sessions;
-    });
+      // Get references to input fields
+    const hoursInput = document.getElementById('Hours');
+    const rateInput = document.getElementById('Rate');
+    const totalAmountInput = document.getElementById('TotalAmount');
+
+    // Function to calculate total amount
+    function calculateTotal() {
+        const hours = parseFloat(hoursInput.value) || 0;
+        const rate = parseFloat(rateInput.value) || 0;
+
+        // Basic validation checks
+        if (hours < 0 || rate < 0) {
+            totalAmountInput.value = 'Invalid input';
+            return;
+        }
+
+        // Calculate total
+    const total = hours * rate;
+    // Convert to integer (nearest whole number)
+    totalAmountInput.value = Math.round(total);
+    }
+
+    // Add event listeners to inputs for real-time calculation
+    hoursInput.addEventListener('input', calculateTotal);
+    rateInput.addEventListener('input', calculateTotal);
 
     function uploadSupportingDocument() {
         var fileInput = document.getElementById('SupportingDocumentsFile');

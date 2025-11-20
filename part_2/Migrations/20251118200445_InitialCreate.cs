@@ -18,9 +18,10 @@ namespace part_2.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FacultyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ModuleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Hours = table.Column<int>(type: "int", nullable: false),
                     Rate = table.Column<int>(type: "int", nullable: false),
                     TotalAmount = table.Column<int>(type: "int", nullable: false),
-                    SupportingDocuments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SupportingDocuments = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

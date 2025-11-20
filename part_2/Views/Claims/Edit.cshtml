@@ -4,6 +4,87 @@
     ViewData["Title"] = "Edit";
 }
 
+<style>
+    /* Container styling */
+    .claims-container {
+        max-width: 1000px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    /* Title styling */
+    .claims-title {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    /* Table styling */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table thead {
+            background-color: #808080;
+            color: #fff;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        /* Row hover effect */
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    /* Action buttons styling */
+    .btn-sm {
+        padding: 5px 10px;
+        font-size: 0.9em;
+    }
+
+    /* Link styling */
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+
+    .login-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff; /* blue background */
+        color: #fff; /* white text */
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: background-color 0.3s, text-decoration 0.3s;
+    }
+
+        .login-link:hover {
+            background-color: #0069d9; /* darker blue on hover */
+            text-decoration: underline;
+        }
+
+</style>
+<div class="claims-container">
 <h1>Edit</h1>
 
 <h4>Claim</h4>
@@ -24,9 +105,14 @@
                 <span asp-validation-for="ModuleName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Sessions" class="control-label"></label>
-                <input asp-for="Sessions" class="form-control" />
-                <span asp-validation-for="Sessions" class="text-danger"></span>
+                <label asp-for="Hours" class="control-label"></label>
+                <input asp-for="Hours" class="form-control" />
+                <span asp-validation-for="Hours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rate" class="control-label"></label>
+                <input asp-for="Rate" class="form-control" />
+                <span asp-validation-for="Rate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TotalAmount" class="control-label"></label>
@@ -46,9 +132,9 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="HumanResources">Back to Report</a>
 </div>
-
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -12,7 +12,9 @@ namespace part_2.Models
 
         public required string ModuleName { get; set; }
 
-        public required int Sessions { get; set; }
+        public required int Hours { get; set; }
+
+        public required int Rate { get; set; }
 
         public required int TotalAmount { get; set; }
 

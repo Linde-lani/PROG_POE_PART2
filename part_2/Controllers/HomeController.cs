@@ -51,16 +51,6 @@ namespace part_2.Controllers
                 return View("Index"); // Show login again with error
             }
 
-            // Verify password
-            //var passwordHasher = new PasswordHasher<RegisterViews>();
-            //var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, Password);
-            //if (result == PasswordVerificationResult.Failed)
-            //{
-            //    // Invalid password
-            //    ModelState.AddModelError("", "Invalid email or password");
-            //    return View("Index");
-            //}
-
             // Successful login, redirect based on role
             switch (user.Role)
             {
@@ -73,6 +63,9 @@ namespace part_2.Controllers
                 case "Academic Manager":
                     _logger.LogInformation("Redirecting to ManagerDashboard");
                     return RedirectToAction("ManagerDashboard", "Claims");
+                case "Human Resources":
+                    _logger.LogInformation("Redirecting to HumanResources");
+                    return RedirectToAction("HumanResources", "Claims");
                 default:
                     _logger.LogInformation("Redirecting to Index");
                     return RedirectToAction("Index"); 

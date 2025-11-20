@@ -11,7 +11,7 @@ using part_2.Data;
 namespace part_2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251021104233_InitialCreate")]
+    [Migration("20251118200445_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,9 +44,6 @@ namespace part_2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Rate")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Sessions")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")

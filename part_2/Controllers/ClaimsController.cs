@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,6 +21,8 @@ namespace part_2.Controllers
             _context = context;
         }
 
+
+        
         // GET: Claims
         public async Task<IActionResult> Index()
         {
@@ -56,7 +60,7 @@ namespace part_2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FacultyName,ModuleName,Sessions,TotalAmount,SupportingDocuments")] Claim claim)
+        public async Task<IActionResult> Create([Bind("Id,FacultyName,ModuleName,Hours,Rate,TotalAmount,SupportingDocuments")] Claim claim)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +92,7 @@ namespace part_2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FacultyName,ModuleName,Sessions,TotalAmount,SupportingDocuments")] Claim claim)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FacultyName,ModuleName,Hours,Rate,TotalAmount,SupportingDocuments")] Claim claim)
         {
             if (id != claim.Id)
             {
@@ -167,7 +171,8 @@ namespace part_2.Controllers
                     Id = c.Id,
                     FacultyName = c.FacultyName,
                     ModuleName = c.ModuleName,
-                    Sessions = c.Sessions,
+                    Hours = c.Hours,
+                    Rate = c.Rate,
                     TotalAmount = c.TotalAmount,
                     SupportingDocuments = c.SupportingDocuments,
                     Status = c.Status
@@ -185,7 +190,8 @@ namespace part_2.Controllers
                     Id = c.Id,
                     FacultyName = c.FacultyName,
                     ModuleName = c.ModuleName,
-                    Sessions = c.Sessions,
+                    Hours = c.Hours,
+                    Rate = c.Rate,
                     TotalAmount = c.TotalAmount,
                     SupportingDocuments = c.SupportingDocuments,
                     Status = c.Status
@@ -200,7 +206,14 @@ namespace part_2.Controllers
             return View();
         }
 
-        
+        public IActionResult HumanResources()
+        {
+            var claims = _context.Claims.ToList(); // or your data retrieval logic
+            return View(claims);
+        }
+
+
+
         [HttpPost]
         public IActionResult ApproveManagerClaim(int id)
         {

@@ -66,12 +66,6 @@ namespace part_2.Controllers
                     return View(registerView);
                 }
 
-                // Hash the password
-                //var passwordHasher = new PasswordHasher<RegisterViews>();
-                //registerView.PasswordHash = passwordHasher.HashPassword(registerView, registerView.Password);
-                //registerView.Password = null; // Clear plain password
-
-
                 _context.Add(registerView);
                 await _context.SaveChangesAsync();
                 // Redirect based on role
@@ -83,6 +77,8 @@ namespace part_2.Controllers
                         return RedirectToAction("CoordinatorDashboard","Claims");
                     case "Academic Manager":
                         return RedirectToAction("ManagerDashboard", "Claims");
+                    case "Human Resources":
+                        return RedirectToAction("HumanResources", "Claims");
                     default:
                         return RedirectToAction("Index");
                 }

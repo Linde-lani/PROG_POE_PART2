@@ -43,9 +43,6 @@ namespace part_2.Migrations
                     b.Property<int>("Rate")
                         .HasColumnType("int");
 
-                    b.Property<int>("Sessions")
-                        .HasColumnType("int");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -59,7 +56,7 @@ namespace part_2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Claims", (string)null);
+                    b.ToTable("Claims");
                 });
 
             modelBuilder.Entity("part_2.Models.RegisterViews", b =>
@@ -88,7 +85,7 @@ namespace part_2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RegisterViews", (string)null);
+                    b.ToTable("RegisterViews");
                 });
 #pragma warning restore 612, 618
         }
