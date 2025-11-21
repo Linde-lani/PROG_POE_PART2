@@ -222,12 +222,12 @@ namespace part_2.Controllers
                 if (isValid)
                 {
                     // Automatically approve
-                    claim.Status = "Approved";
+                    claim.Status = "Auto-Approved";
                 }
                 else
                 {
                     // Optionally, reject or flag for manual review
-                    claim.Status = "Rejected"; // Or keep pending for manual review
+                    claim.Status = "Auto-Rejected"; // Or keep pending for manual review
                 }
             }
             await _context.SaveChangesAsync();
