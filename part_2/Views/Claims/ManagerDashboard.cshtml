@@ -119,6 +119,10 @@
                         <form method="post" asp-action="RejectManagerClaim" asp-route-id="@claim.Id" style="display:inline; margin-left:5px;">
                             <button type="submit" class="btn btn-danger btn-sm">Reject</button>
                         </form>
+                        <!-- Add a button to trigger verification manually -->
+                        <form method="post" asp-action="VerifyAndApproveClaims" asp-route-id="@claim.Id" style="display:inline; margin-right:5px;">
+                            <button type="submit" class="btn btn-primary">Run Verification</button>
+                        </form>
                     </td>
                 </tr>
             }
