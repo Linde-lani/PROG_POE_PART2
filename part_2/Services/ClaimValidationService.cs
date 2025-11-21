@@ -10,8 +10,8 @@ namespace part_2.Services
             if (claim.Hours < 1 || claim.Hours > 40)
                 return false;
 
-            // Validate rate: must be between 10 and 100
-            if (claim.Rate < 10 || claim.Rate > 100)
+            // Validate rate: must be between 10 and 200
+            if (claim.Rate < 10 || claim.Rate > 200)
                 return false;
 
             // Check for supporting documents
